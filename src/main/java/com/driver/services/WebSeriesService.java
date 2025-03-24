@@ -18,13 +18,23 @@ public class WebSeriesService {
     ProductionHouseRepository productionHouseRepository;
 
     public Integer addWebSeries(WebSeriesEntryDto webSeriesEntryDto)throws  Exception{
-
+            ProductionHouse productionHouse=productionHouseRepository.findById(webSeriesEntryDto.getProductionHouseId()).orElseThrow(()->new RuntimeException("productionHouse not found"));
+            WebSeries webSeries=new WebSeries();
+            webSeries.setSeriesName(webSeriesEntryDto.getSeriesName());
+            webSeries.setAgeLimit(webSeriesEntryDto.getAgeLimit());
+            webSeries.setRating(webSeriesEntryDto.getRating());
+            webSeries.setProductionHouse(productionHouse);
+            webSeries.setSubscriptionType(webSeriesEntryDto.getSubscriptionType());
         //Add a webSeries to the database and update the ratings of the productionHouse
         //Incase the seriesName is already present in the Db throw Exception("Series is already present")
         //use function written in Repository Layer for the same
         //Dont forget to save the production and webseries Repo
+        webSeriesRepository.save(webSeries);
 
-        return null;
+        productionHouse.getWebSeriesList().add(webSeries);
+        productionHouseRepository.save(productionHouse);
+
+        return webSeries.getId();
     }
 
 }

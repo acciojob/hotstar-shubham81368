@@ -1,13 +1,8 @@
 package com.driver.model;
 
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Entity
@@ -17,12 +12,12 @@ public class Subscription {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-
+@Enumerated(EnumType.STRING)
     private SubscriptionType subscriptionType;
 
     private int noOfScreensSubscribed;
 
-    private Date startSubscriptionDate;
+    private LocalDateTime startSubscriptionDate;
 
     private int totalAmountPaid;
 
@@ -30,7 +25,7 @@ public class Subscription {
     @JoinColumn
     private User user;
 
-    public Subscription(SubscriptionType subscriptionType, int noOfScreensSubscribed, Date startSubscriptionDate, int totalAmountPaid) {
+    public Subscription(SubscriptionType subscriptionType, int noOfScreensSubscribed, LocalDateTime startSubscriptionDate, int totalAmountPaid) {
         this.subscriptionType = subscriptionType;
         this.noOfScreensSubscribed = noOfScreensSubscribed;
         this.startSubscriptionDate = startSubscriptionDate;
@@ -65,11 +60,11 @@ public class Subscription {
         this.noOfScreensSubscribed = noOfScreensSubscribed;
     }
 
-    public Date getStartSubscriptionDate() {
+    public LocalDateTime getStartSubscriptionDate() {
         return startSubscriptionDate;
     }
 
-    public void setStartSubscriptionDate(Date durationOfSubscription) {
+    public void setStartSubscriptionDate(LocalDateTime durationOfSubscription) {
         this.startSubscriptionDate = durationOfSubscription;
     }
 
